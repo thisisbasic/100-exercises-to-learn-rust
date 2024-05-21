@@ -13,7 +13,9 @@ mod tests {
 
     #[test]
     fn string_size() {
-        assert_eq!(size_of::<String>(), todo!());
+        //On my machine: usize=64 bits/8 bytes
+        // 8 * 3 (length, capacity, pointer)
+        assert_eq!(size_of::<String>(), 24);
     }
 
     #[test]
@@ -23,6 +25,8 @@ mod tests {
         // but, in general, the memory layout of structs is a more complex topic.
         // If you're curious, check out the "Data layout" section of the Rustonomicon
         // https://doc.rust-lang.org/nomicon/data.html for more information.
-        assert_eq!(size_of::<Ticket>(), todo!());
+        //On my machine: usize=64 bits/8 bytes for each field (title, description, title)
+        // 8 bytes * 3 * 3(length, capacity, pointer)
+        assert_eq!(size_of::<Ticket>(), 72); 
     }
 }
