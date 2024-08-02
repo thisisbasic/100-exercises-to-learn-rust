@@ -4,7 +4,18 @@
 use std::thread;
 
 pub fn sum(slice: &'static [i32]) -> i32 {
-    todo!()
+    let mid = slice.len() / 2;
+    let (part_1, part_2) = slice.split_at(mid);
+
+    let handle_1 = thread::spawn(move || part_1.iter().sum::<i32>());
+    let handle_2 = thread::spawn(move || part_2.iter().sum::<i32>());
+
+    // this also works without "move" keyword. Probably because it uses static lifetime, meaning the threads
+    // are guaranteed to have valid references.
+    // let handle_1 = thread::spawn(|| part_1.iter().sum::<i32>());
+    // let handle_2 = thread::spawn(|| part_2.iter().sum::<i32>());
+
+    handle_1.join().unwrap() + handle_2.join().unwrap()
 }
 
 #[cfg(test)]
